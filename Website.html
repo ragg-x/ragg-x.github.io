@@ -1,0 +1,1654 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Embedded</title>
+  <style>
+    body {
+      font-family: Times;
+      background-color:lightblue;
+      margin: 0;
+      padding: 0;
+    }
+    
+
+    
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .content {
+      background-color: white;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .header-logo {
+      width: 100px;
+      height: auto;
+      margin-left: 20px;
+    }
+    
+    .header-text {
+      flex: 1;
+      line-height: 8px;
+    }
+
+    pre {
+      text-align: left;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="header">
+<head>
+  <meta charset="UTF-8">
+  <title>Header with Text and Right-aligned Image</title>
+  <style>
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 25px;
+      background-color: #333;
+      color: #fff;
+    }
+    
+    .header-logo {
+      width: 135px;
+      height: auto;
+      margin-left: 20px;
+    }
+    
+    .header-text {
+      flex: 1;
+      line-height: 8px;
+    }
+    .dropdown-button {
+      display: inline-block;
+      background-color: #f9f9f9;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      float: right;
+    }
+    
+    .dropdown-content {
+      display: none;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    
+    .content.show .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown-button::after {
+      content: "▼";
+    }
+    
+    .content.show .dropdown-button::after {
+      content: "▲";
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <header>
+	    <p style="font-size:38px;"><b>EMBEDDED C PROGRAMMING<br>
+    	    FOR<br>
+    	    PIC MICROCONROLLER</b></p>
+    <div class="header-text" align="right">
+      <h1><b>RAGHAVENDRA V</b></h1>
+      <h3>B.E. : Electrical & Electronics Engineering</h3>
+      <h3>SSN College of Engineering</h3>
+      <h3>Ph : +91-9600103213</h3>
+      <h3>Email : raghav9003@gmail.com</h3>
+      <h3>LinkedIn : <a href="https://www.linkedin.com/in/raghavendra-v-2a74a1200" target="_blank" style="color: #ADD8E6;">Click here</a>
+</h3>
+    </div>
+    <img src="C:\Users\RAGHAV\Desktop\RAGHAVENDRA_V.JPG" alt="Image" class="header-logo">
+  </header>
+</body>
+
+
+
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="content">
+      <h2>ABOUT</h2>
+      <p></p>
+    </div>
+    
+    <div class="content">
+      <h2>CONTENTS</h2>
+      <ul>
+        <li><a href="#sec1">LED Blink</a></li>
+        <li><a href="#sec2">Switch (PullUp Resistor)</a></li>
+	<li><a href="#sec3">Switch(PullDown Resistor)</a></li>
+        <li><a href="#sec4">LCD</a></li>
+	<li><a href="#sec5">LCD with Switch</a></li>
+	<li><a href="#sec6">Pulse Width Modulation</a></li>
+	<li><a href="#sec7">Analog to Digital Converter</a></li>
+	<li><a href="#sec8">ADC with PWM</a></li>      
+	<li><a href="#sec9">UART</a></li>
+	<li><a href="#sec10">Memory Mapping</a></li>
+	<li><a href="#sec11">Interrupt</a></li>
+	<li><a href="#sec12">Seven Segment Display</a></li>
+	<li><a href="#sec13">Timer</a></li>
+	<li><a href="#sec14">Timer Preloading</a></li>
+	<li><a href="#sec15">Keypad Interface</a></li>
+	<li><a href="#sec16">EEPROM</a></li>
+	<li><a href="#sec17">RTC</a></li>
+	<li><a href="#sec18">SPI</a></li>
+	<li><a href="#sec19">Arduion</a></li>
+     </ul>
+    </div>
+
+
+	<!-- Section 1: LED Blink -->    
+<div class="content" id="sec1">
+
+<h2>LED Blink
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button>  
+</h2>
+ 
+
+<div class="dropdown-content">
+
+<script>
+function copyPreContent(preId) {
+  var preContent = document.getElementById(preId).innerText;
+  
+  var textarea = document.createElement("textarea");
+  textarea.value = preContent;
+  
+  document.body.appendChild(textarea);
+  
+  textarea.select();
+  document.execCommand("copy");
+  
+  document.body.removeChild(textarea);
+  
+  alert("Text copied to clipboard!");
+}
+</script>
+<span style="float: right;"><button onclick="copyPreContent('pre1')">Copy code</button></span>
+<pre id="pre1">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000 
+void main()
+{
+    TRISC = 0x00;       //set all portc bit as outputs '0000 0000'
+    while(1)            //continuously running the prog
+    {
+    PORTC = 0x40;       //set rc6 high '0100 0000'    
+    __delay_ms(3000);   //delay for 3 sec
+    PORTC = 0x01;       //set rc1 high '0000 0010'
+    __delay_ms(3000);   //delay for 3 sec
+    PORTC = 0x41;       //set rc6 & rc1 high '0100 0010'    
+    __delay_ms(3000);   //delay for 3 sec
+    PORTC = 0x00;       //set rc6 & rc1 low '0000 0000' 
+    __delay_ms(3000);   //delay for 3 sec
+    }
+}
+</pre>
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="WEEK 1\WhatsApp Video 2023-01-26 at 12.59.55 AM.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+
+<video width="500" height=auto controls>
+  <source src="HARDWARE\1_LED BLINK.mp4"
+type="video/mp4">  
+</video>
+
+
+
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+<script>
+function scrollToTop() {
+  // Scroll smoothly to the top of the page
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+     function toggleDropdown(button) {
+      var content = button.parentNode.parentNode;
+      content.classList.toggle("show");
+    }
+</script>
+</div>
+    </div>
+  
+
+
+<!-- Section 2: Switch (PullUp Resistor) -->       
+ 
+    <div class="content" id="sec2">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>Switch (PullUp Resistor used)</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre2')">Copy code</button></span>
+<pre id="pre2">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned char a;
+void main()
+{   
+    TRISC=0x0F; //set RC0 to RC3 bit as input and RC4 to RC7 bit as output '0000 1111'
+    TRISD=0x77; //set RD3 and RD7 bit as outputs, rest as input '0111 0111'
+    PORTC=0x00; //set portc low '0000 0000'
+    PORTD=0x00; //set portd low '0000 0000'
+    while(1)    //continuously running the prog
+    {
+        a=PORTB;
+        switch(a)
+        {
+            case 0x0E : PORTD = 0x08;   //set RD3 high '0000 1000'
+            break;
+            case 0x0D : PORTD = 0x80;   //set RD7 high '1000 0000'
+            break;
+            case 0x0B : PORTD = 0x00;   //set portd low '0000 0000'
+            break;
+            case 0x07 : PORTD = 0x88;   //set RD3 and RD7 high '1000 1000'
+            break;
+            default :   PORTD = 0x00;   //set portd low '0000 0000'
+        }
+    }
+}
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 2\assignment_2a.X\2023-01-29-2012-54.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\2_SWITCH.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+<!-- Section 3: Switch (PullDown Resistor) -->
+
+    <div class="content" id="sec3">
+<h2>  
+ <button class="dropdown-button" onclick="toggleDropdown(this)"></button>  
+</h2>
+      <h2>Switch (Pulldown Resistor used)</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre3')">Copy code</button></span>
+<pre id="pre3">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned char a;
+void main()
+{   
+    TRISC=0x0F; //set RC0 to RC3 bit as input and RC4 to RC7 bit as output '0000 1111' {But '0000 0000' - Pulldown resistor}
+    TRISD=0x77; //set RD3 and RD7 bit as outputs, rest as input '0111 0111'
+    PORTC=0x00; //set portc low '0000 0000'
+    PORTD=0x00; //set portd low '0000 0000'
+    while(1)    //continuously running the prog
+    {
+        a=PORTC;
+        switch(a)
+        {
+            case 0x01 : PORTD = 0x08;   //set RD3 high '0000 1000' if RC0 high '0000 0001'
+            break;
+            case 0x02 : PORTD = 0x80;   //set RD7 high '1000 0000' if RC1 high '0000 0010'
+            break;
+            case 0x04 : PORTD = 0x00;   //set portd low '0000 0000' if RC2 high '0000 0100'
+            break;
+            case 0x08 : PORTD = 0x88;   //set RD3 and RD7 high '1000 1000' if RC3 high '0000 1000'
+            break;
+            default :   PORTD = 0x00;   //set portd low '0000 0000'
+        }
+    }
+}
+</pre>
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 2\assignment_2b.X\2023-01-30-1537-18.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\2_SWITCH.mp4"
+type="video/mp4">  
+</video>
+
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    </div>
+</div>
+
+
+
+<!-- Section 4: LCD -->
+
+    <div class="content" id="sec4">
+<h2>  
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+</h2>
+      <h2>LCD</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre4')">Copy code</button></span>
+<pre id="pre4">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+void initialization();
+void command(unsigned char);
+void data(unsigned char);
+unsigned char A[11]={"RAGHAVENDRA"};
+void main()
+{   while(1)
+    {
+    initialization();//calling the initialization function without any argument
+    command(0X80);//starting address '1000 0010' 
+    for(int i=0;i<11;i++)
+    {
+        data(A[i]);//printing the data using a for loop
+    }
+    command(0X04);//left to right command '0000 0100'
+    command(0XCD);//starting address '1100 1101'
+    for(int i=0;i<11;i++)
+    {
+        data(A[i]);//printing the data using a for loop
+    }
+    __delay_ms(500);
+    command(0X01);//To clear the display
+
+    }
+}
+void initialization()
+{
+    TRISC=0X00;//setting C port as output for RS and Enable '0000 0000'
+    TRISB=0X00;//setting B port as output for sending data  '0000 0000'
+    command(0x30);//0011 0000
+    __delay_ms(20);
+        command(0X30);//0011 0000
+    __delay_ms(20);
+        command(0X30);//0011 0000
+    __delay_ms(20);
+        command(0X38);//setting n and f values (n=1,f=0) 0011 1000
+    __delay_ms(20);
+        command(0X06);//right to left command '0000 0110'
+    __delay_ms(10);
+        command(0X0C);//display on cursor off '0000 1100'
+    __delay_ms(10);
+}
+void command(unsigned char a)
+{
+    PORTB=0X00;//setting RS as 0 for command 0000 0000
+    PORTC=a;//passing the data to port c
+    PORTB=0X40;//setting the enable high 0100 0000
+    PORTB=0X00;//setting the enable low 0000 0000
+    __delay_ms(10);
+}
+void data(unsigned char a)
+{
+    PORTB=0X02;//setting RS as 1 for data 0000 0010
+    PORTC=a;//passing the data to port c
+    PORTB=0X42;//setting the enable high 0100 0010
+    PORTB=0X02;//setting the enable low 0000 0010
+    __delay_ms(10);
+}
+</pre>
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 3\LCD_CLASS.X\2023-02-09-2300-59.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\3_LCD NAME.mp4"
+type="video/mp4">  
+</video>
+
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    </div>
+</div>
+
+
+
+<!-- Section 5: LCD with Switch -->
+ 
+    <div class="content" id="sec5">
+<h2> 
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+</h2>
+      <h2>LCD with Switch</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre5')">Copy code</button></span>
+<pre id="pre5">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+void initialization(void);//prototype
+void command(unsigned char);//prototype
+void data(unsigned char);//prototype
+void pushbutton();//prototype
+void display(unsigned int);
+unsigned char ar[20]={"BATTERY=V"};//array declared globally
+unsigned char ar1[20]={"BATTERY LOW"};//array declared globally
+unsigned char ar2[20]={"BATTERY NORMAL"};//array declared globally
+unsigned char ar3[20]={"BATTERY HIGH"};//array declared globally
+unsigned char x,m,n,val,dot='.';//global variables
+unsigned int t,o,d,i,j;//global variables
+
+void main()//main function
+{   
+    initialization();//calling initialization()
+    while(1)// To run the prog continuously
+    {
+        pushbutton();//calling pushbutton function
+    }
+}
+void initialization(void)//initialization function
+{
+    TRISB=0xF0;//setting B0-B3 as output and B4-B7 as input '1111 0000'
+    TRISC=0x00;//setting C port as output for RS and Enable '0000 0000'
+    TRISD=0x00;//setting D port as output for RS and Enable '0000 0000'
+    OPTION_REG=0x7F;
+    command(0x38);//0011 0000
+    __delay_ms(100);//calling delay function
+    command(0x38);//0011 0000
+    __delay_ms(100);//calling delay function
+    command(0x38);//0011 0000
+    __delay_ms(100);//calling delay function
+    command(0x38);////setting n and f values (n=1,f=0) 0011 1000
+    __delay_ms(100);//calling delay function
+    command(0x06);//right shift command '0000 0110'
+    __delay_ms(100);//calling delay function
+    command(0x0C);//display on cursor off '0000 1100'
+    __delay_ms(100);//calling delay function
+    command(0x01);//To clear the display
+    __delay_ms(100);//calling delay function
+    j=155;
+}
+void pushbutton()//pushbutton function
+{
+    val=PORTB&0xF0;//port b & 11110000, other than RB4 to RB7 all are 0
+    switch(val)// switch case
+    {
+        case 0xE0://Enters if val=0xE0
+            command(0x80);//LCD 1st row 1st position '0111 0000'
+            for(i=0;i<=7;i++)
+            {
+                data(ar[i]);//displaying 1st 8 characters of ar
+            }
+            command(0x8C);//LCD 1st row 13th position '1000 1100'
+            data(ar[8]);//displaying 9th characters of ar
+            command(0x88);//LCD 1st row 9th position '1000 1000'
+            display(j);//calling display function with j as parameter
+            break;//break out of the switch case
+        
+        case 0xD0://Enters if val=0xD0
+            j++;    //increment j
+            command(0x88); //LCD 1st row 9th position '1000 1000'
+            if(j>=255)//Enters if j>=255
+            {
+                j=255;//reset j=225
+            }
+            display(j);//calling display function with j as parameter
+            break;//break out of the switch case
+        
+        case 0xB0://Enters if val=0xB0
+             j--;//decrement j
+            command(0x88);//LCD 1st row 9th position '1000 1000'
+            if(j<=155)//Enters if j<=155
+            {
+                j=155;//reset j=155
+            }
+            display(j);//calling display function with j as parameter
+            break; //break out of the switch case
+        
+        case 0x70://Enters if val=0x70
+            j=225;//reset j=225
+            command(0x88);//LCD 1st row 9th position '1000 1000'
+            display(j);//calling display function with j as parameter
+            break;//break out of the switch case
+    }
+}
+void command(unsigned char a)//command function
+{
+    PORTC&=0XF7;//setting RS (RB3)as 0 for command 0000 0000
+    PORTD=a;//passing the data to port c
+    PORTC|=0X02;//setting the enable RB6 high 0100 0000
+    PORTC&=~0X02;//setting the enable low 0000 0000
+    __delay_ms(10);//delay
+}
+void data(unsigned char a)//data function
+{
+    PORTC|=0X08;//setting RS as 1 for data 0000 0010
+    PORTD=a;//passing the data to port c
+    PORTC|=0X02;//setting the enable high 0100 0010
+    PORTC&=~0X02;//setting the enable low 0000 0010
+    __delay_ms(10);//delay
+}
+void display(unsigned int i)//display function
+{   
+    t=(unsigned char)(i/100);//tens place value stored in t
+    o=(unsigned char)((i-(t*100))/10);//ones place value stored in o
+    d=(unsigned char)((i-(t*100)-(o*10)));//decimal place value stored in d
+    command(0x88);//LCD 1st row 9th position '1000 1000'
+    data(0x30+t);//calling data function,0x30->char value is 0
+    command(0x89);//LCD 1st row 10th position '1000 1001'
+    data(0x30+o);//calling data function,0x30->char value is 0
+    command(0x8A);//LCD 1st row 11th position '1000 1010'
+    data(dot);//calling data function,0x30->char value is 0
+    command(0x8B);//LCD 1st row 12th position '1000 1011'
+    data(0x30+d);
+    command(0xC0);//calling data function,0x30->char value is 0
+    if(i<=175)//Enters if i<=175
+    {
+        for(i=0;i<=15;i++)
+            {
+                data(ar1[i]);//calling data function with ar1 as parameter
+            }
+    }
+    else if(i>175 && i<=205)//Enters if i in the range 175 to 205
+    {
+        for(i=0;i<=15;i++)
+            {
+                data(ar2[i]);//calling data function with ar2 as parameter
+            }
+    }
+    else//Enters for other conditions
+    {
+        for(i=0;i<=15;i++)
+            {
+                data(ar3[i]);//calling data function with ar3 as parameter
+            }
+    }
+
+}
+</pre>
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 4\battery.X\2023-02-18-0918-35.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\5_LCD BATTERY_compressed.mp4"
+type="video/mp4">  
+</video>
+
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    </div>   
+</div>  
+
+
+
+<!-- Section 6: Pulse Width Modulation -->
+
+    <div class="content" id="sec6">
+<h2>  
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+</h2>
+      <h2>Pulse Width Modulation</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre6')">Copy code</button></span>
+<pre id="pre6">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+void main(void) 
+{
+    TRISC=0xFB;	  //set RC2 of PORTC as OUTPUT and others as input '1111 1011'
+    T2CON=0x06;	  //bit7->0 ; (bit6-bit3)->0 1:1 postscale ; bit2->TMR20N->1 ; (bit1, bit0)-> (1,x) prescalar 1:16 '0000 0110'
+    CCP1CON=0x0F; //bit7,bit6->0 ; bit5,bit4->LSbs of the PWM duty cycle ;(bit3-bit0)-> 11xx for PWM mode '0000 1111'
+    PR2=0x2E;	  //(6000000/(4*16*2000))-1 = 45.875 = 46 (rounded)-0x2E (1:16 prescalar) ,Fosc=6MHz and Fpwm=2kHz
+    while(1) 	  // infinite loop
+    {
+        CCPR1L=0x09;	//20% duty cycle (0.2/2000)*(6000000/16) = 0x26 (0000 1001 10) so first 8 bits hex value is 0x09
+        CCP1CON=(CCP1CON&0xCF)|(0x20);	//CCP1CON<5:4> -> 10
+        __delay_ms(3000); 		// 3 second delay
+        
+        CCPR1L=0x1C;	//60% duty cycle (0.6/2000)*(6000000/16) = 0x71 (0001 1100 01) so first 8 bits hex value is 0x1C
+        CCP1CON=(CCP1CON&0xCF)|(0x10);	//CCP1CON<5:4> ->01
+        __delay_ms(3000); 		// 3 second delay
+        
+        CCPR1L=0x2A;	//90% duty cycle (0.9/2000)*(6000000/16) = 0xA9 (0010 1010 01) so first 8 bits hex value is 0x2A
+        CCP1CON=(CCP1CON&0xCF)|(0x10);	//CCP1CON<5:4> ->01
+        __delay_ms(3000); 		// 3 second delay
+        
+    }
+}
+</pre>
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 5\2023-03-04-1321-48.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\7_PWM.mp4"
+type="video/mp4">  
+</video>
+
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    </div> 
+</div>
+
+
+
+<!-- Section 7: Analog to Digital Converter -->       
+ 
+    <div class="content" id="sec7">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>Analog to Digital Converter</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre7')">Copy code</button></span>
+<pre id="pre7">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+
+void initialization(void);//prototype
+void command(unsigned char);//prototype
+void data(unsigned char);//prototype
+void display(unsigned int);//prototype
+void delay(unsigned int);//prototype
+unsigned char n,j;//global variable
+unsigned char value[10];//global variable
+unsigned long lval,hval,m,delaycnt,val,volt;//global variable
+void main()//MAin function
+{   
+    initialization();//calling the initialization function without any argument
+    while(1)//Infinite loop
+    {
+        ADCON0|=0X04;//Starts A/D conversion
+        while(ADCON0&0X04);//Exit the loop only when A/D conversion stops 
+        lval=ADRESL; //Storing ADRESL value to lval
+        hval=ADRESH; //Storing ADRESH value to Hval
+        val=((unsigned int)hval<<2)+((unsigned int)lval>>6); // hval left shift 2 times + lval right shift 6 times
+        volt=val*100/1023; // From the value obtained corresponding voltage is calculated for the range of [0-100] 
+        command(0x80); 
+        display(volt); //calling display function with volt as parameter
+        delay(1000); //delay
+    }
+}
+void initialization(void)//initialization function
+{
+    TRISA=0X04;// setting bit 2 of PORT A as input '0000 0100'
+    TRISC=0x00;//setting C port as output for RS and Enable '0000 0000'
+    TRISD=0x00;//setting D port as output for RS and Enable '0000 0000'
+    ADCON0=0x91;// Fosc/32 , Channel 2(AN2),A/D ON 
+    ADCON1=0x02;// Lift justified, AN2 - analog pin
+    command(0x38);//0011 1000
+    delay(100);//calling delay function
+    command(0x38);//0011 1000
+    delay(100);//calling delay function
+    command(0x38);//0011 1000
+    delay(100);//calling delay function
+    command(0x38);////setting n and f values (n=1,f=0) 0011 1000
+    delay(100);//calling delay function
+    command(0x06);//right shift command '0000 0110'
+    delay(100);//calling delay function
+    command(0x0C);//display on cursor off '0000 1100'
+    delay(100);//calling delay function
+    command(0x01);//To clear the display
+    delay(100);//calling delay function
+}
+
+void display(unsigned int x) // LCD DISPLAY
+{
+    unsigned char s;
+    j=1;
+    m=x;
+    while(m)
+    {
+        s=m-(m/10)*10;
+        value[j]=s;
+        j++;
+        m/=10;
+    }
+    value[j]='\0';
+    j-=1;
+    if(value[3]>0)
+    {
+        n=0x30+value[3];
+        data(n);
+    }
+    else 
+        data(0x20);
+    if(value[2]>=0)
+    {
+        n=0x30+value[2];
+        data(n);
+    }   
+    else
+        data(0x20);
+    n=0x30+value[1];
+    data(n);
+    data(0x56);
+}
+void command(unsigned char a)
+{
+    PORTC&=~0X08;//setting RS as 0 for command 0000 0000
+    PORTD=a;//passing the data to port D
+    PORTC|=0X01;//setting the enable high 0100 0000
+    PORTC&=~0X01;//setting the enable low 0000 0000
+    delay(100);//calling delay function
+}
+void data(unsigned char a)
+{
+    PORTC|=0X08;//setting RS as 1 for data 0000 0010
+    PORTD=a;//passing the data to port D
+    PORTC|=0X01;//setting the enable high 0100 0010
+    PORTC&=~0X01;//setting the enable low 0000 0010
+    delay(100);//calling delay function
+}
+
+void delay(unsigned int delaycnt)//delay function
+{
+    while(--delaycnt);//Runs while delaycnt not equal to 0
+}</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 6\ADC2.X\2023-03-18-1225-50.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\8_ADC with PWM.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+
+<!-- Section 8: ADC with PWM -->       
+ 
+    <div class="content" id="sec8">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+</h2>
+      <h2>ADC with PWM</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre8')">Copy code</button></span>
+<pre id="pre8">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+
+void initialization(void);		//prototype
+void command(unsigned char);	//prototype
+void data(unsigned char);		//prototype
+void display(unsigned int);		//prototype
+void delay(unsigned int);		//prototype
+unsigned char n,j;				//global variable
+unsigned char value[10];		//global variable
+unsigned long lval,hval,m,delaycnt,val,volt;//global variable
+void main()//MAin function
+{   
+    initialization();			//calling the initialization function without any argument
+    while(1)//Infinite loop
+    {
+        ADCON0|=0X04;			//Starts A/D conversion
+        while(ADCON0&0X04);		//Exit the loop only when A/D conversion stops 
+        lval=ADRESL; 			//Storing ADRESL value to lval
+        hval=ADRESH; 			//Storing ADRESH value to Hval
+        val=((unsigned int)hval<<2)+((unsigned int)lval>>6); // hval left shift 2 times + lval right shift 6 times
+        volt=val*100/1023; 		// From the value obtained corresponding voltage is calculated for the range of [0-100] 
+        command(0x80); 
+        display(volt); 			//calling display function with volt as parameter
+        volt=volt*(0.9/2000)*(6000000/1600)//%90% duty cycle((0.9/2000)*(6000000/1600)) = 0xA9 (0010 1010 01) 
+                                           //                                             so first 8 bits hex value
+        CCPR1L=volt>>2;
+        CCP1CON=CCP1CON+((volt&0x03)<<4);
+        delay(1000); 			//delay
+    }
+}	
+void initialization(void)//initialization function
+{
+    TRISA=0X04;			// setting bit 2 of PORT A as input '0000 0100'
+    TRISC=0x00;			//setting C port as output for RS and Enable '0000 0000'
+    TRISD=0x00;			//setting D port as output for RS and Enable '0000 0000'
+    ADCON0=0x91;		// Fosc/32 , Channel 2(AN2),A/D ON 
+    ADCON1=0x02;		// Lift justified, AN2 - analog pin
+    T2CON=0X06;
+    CCP1CON=0X0F;
+    PR2=0X2E;
+    command(0x38);		//0011 1000
+    delay(100);			//calling delay function
+    command(0x38);		//0011 1000
+    delay(100);			//calling delay function
+    command(0x38);		//0011 1000
+    delay(100);			//calling delay function
+    command(0x38);		//setting n and f values (n=1,f=0) 0011 1000
+    delay(100);			//calling delay function
+    command(0x06);		//right shift command '0000 0110'
+    delay(100);			//calling delay function
+    command(0x0C);		//display on cursor off '0000 1100'
+    delay(100);			//calling delay function
+    command(0x01);		//To clear the display
+    delay(100);			//calling delay function
+}
+
+void display(unsigned int x) // LCD DISPLAY
+{
+    unsigned char s;
+    j=1;
+    m=x;
+    while(m)
+    {
+        s=m-(m/10)*10;
+        value[j]=s;
+        j++;
+        m/=10;
+    }
+    value[j]='\0';
+    j-=1;
+    if(value[3]>0)
+    {
+        n=0x30+value[3];
+        data(n);
+    }
+    else 
+        data(0x20);
+    if(value[2]>=0)
+    {
+        n=0x30+value[2];
+        data(n);
+    }   
+    else
+        data(0x20);
+    n=0x30+value[1];
+    data(n);
+    data(0x56);
+}
+void command(unsigned char a)
+{
+    PORTC&=~0X08;		//setting RS as 0 for command 0000 0000
+    PORTD=a;			//passing the data to port D
+    PORTC|=0X01;		//setting the enable high 0100 0000
+    PORTC&=~0X01;		//setting the enable low 0000 0000
+    delay(100);			//calling delay function
+}
+void data(unsigned char a)
+{
+    PORTC|=0X08;		//setting RS as 1 for data 0000 0010
+    PORTD=a;			//passing the data to port D
+    PORTC|=0X01;		/setting the enable high 0100 0010
+    PORTC&=~0X01;		//setting the enable low 0000 0010
+    delay(100);			//calling delay function
+}
+
+void delay(unsigned int delaycnt)//delay function
+{
+    while(--delaycnt);//Runs while delaycnt not equal to 0
+}
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 7\ADC_PWM.X\2023-03-24-1402-52.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\8_ADC with PWM.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+<!-- Section 9: UART -->       
+ 
+    <div class="content" id="sec9">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>UART</h2>
+<div class="dropdown-content">
+	<h2>Master</h2>
+<span style="float: right;"><button onclick="copyPreContent('pre9a')">Copy code</button></span>
+<pre id="pre9a">
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned char val;
+void main()
+{
+    TRISC=0X80;		//RC7-Rx (input mode)  '1000 0000'
+    TRISB=0XF0;		//RB4-RB7->input RB0-RB3->output mode
+    PORTD=0X00;		//all pins LOW
+    TXSTA=0X20;		//Bit7-don't care, Bit6-8bit transmission, Bit5-Transmit enable, Bit4-Async mode, Bit3-0, 
+			//Bit2-low speed, Bit1-TSR full, Bit0-not parity
+    RCSTA=0X90;		//Bit7-Serial port enable, Bit4-ENable continuous receiving
+    SPBRG=0X09;		//x=(6000000/(9600x64))-1 = 8.76 = 9 = 0x09
+    OPTION_REG&=0x7F;		//Pullup resistance
+    while(1)
+    {
+        val=PORTB& 0xF0;	// &0xF0 not required in this case, Best practice
+        {
+            switch(val)
+            {
+                case 0xE0 :  TXREG='A';
+                break;
+                case 0xD0 :  TXREG='B';
+                break;
+                case 0xB0 :  TXREG='C';
+                break;
+                case 0x70 :  TXREG='D';
+                break;
+            }
+        }__delay_ms(100);	//delay function
+    }
+}
+</pre>
+<h2>Slave</h2>
+<span style="float: right;"><button onclick="copyPreContent('pre9b')">Copy code</button></span>
+<pre id="pre9b">
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned char val;
+void main()
+{
+    TRISC=0X80;
+    TRISD=0X00;
+    PORTD=0X00;
+    TXSTA=0X20;
+    RCSTA=0X90;
+    SPBRG=0X09;
+    while(1)
+    {
+        if(PIR1&0X20)
+        {
+            val=RCREG;
+            switch(val)
+            {
+                case 'A' :  PORTD=0X02;
+                            TXREG='a';break;
+                case 'B' :  PORTD=0X04;
+                            TXREG='b';break;
+                case 'C' :  PORTD=0X08;
+                            TXREG='c';break;
+                case 'D' :  PORTD=0X10;
+                            TXREG='d';break;
+            }
+        }__delay_ms(100);
+    }
+}
+
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 8\UART.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware (Arduino IDE is used)</h2>
+<span style="float: right;"><button onclick="copyPreContent('pre9c')">Copy code</button></span>
+<pre id="pre9c">
+	<left>
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned char val;
+void main()
+{
+    TRISC=0X80;
+    TRISD=0X00;
+    PORTD=0X00;
+    TXSTA=0X20;
+    RCSTA=0X90;
+    SPBRG=0X20;
+    while(1)
+    {
+        if(PIR1&0X20)
+        {
+            val=RCREG;
+            switch(val)
+            {
+                case 'A' :  PORTD=0X02;
+                            TXREG='a';break;
+                case 'B' :  PORTD=0X04;
+                            TXREG='b';break;
+                case 'C' :  PORTD=0X08;
+                            TXREG='c';break;
+                case 'D' :  PORTD=0X10;
+                            TXREG='d';break;
+            }
+        }__delay_ms(100);
+    }
+}
+</pre>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\9_UART.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+
+<!-- Section 10: Memory Mapping -->       
+ 
+    <div class="content" id="sec10">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>Memory Mapping</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre10')">Copy code</button></span>
+<pre id="pre10">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned char a;
+unsigned char *IOSet_B=(unsigned char *)0x86;   //Assigning address of TRISB to pointer IOSet_B 
+unsigned char *PushButton=(unsigned char *)0x06;//Assigning address of PORTB to pointer PushButton
+unsigned char *IOSet_D=(unsigned char *)0x88;   //Assigning address of TRISD to pointer IOSet_D
+unsigned char *Led=(unsigned char *)0x08;       //Assigning address of PORTD to pointer Led
+unsigned char *PullUp=(unsigned char *)0x81;    //Assigning address of OPTION_REG to pointer PullUp
+void main()
+{   
+    *IOSet_B=0x0F;      //set RB0 to RB3 bit as input and RB4 to RB7 bit as output '0000 1111' using pointer
+    *IOSet_D=0x77;      //set RD3 and RD7 bit as outputs, rest as input '0111 0111' using pointer
+    *PushButton=0x00;   //set portb low '0000 0000' using pointer
+    *Led=0x00;          //set portd low '0000 0000' using pointer
+    *PullUp&=0X7F;      //pull up resistance using pointer
+    while(1)            //continuously running the prog
+    {
+        a=*PushButton;
+        switch(a)
+        {
+            case 0x0E : *Led = 0x08;   //set RD3 high '0000 1000'
+            break;
+            case 0x0D : *Led = 0x80;   //set RD7 high '1000 0000'
+            break;
+            case 0x0B : *Led = 0x00;   //set portd low '0000 0000'
+            break;
+            case 0x07 : *Led = 0x88;   //set RD3 and RD7 high '1000 1000'
+            break;
+            default :   *Led = 0x00;   //set portd low '0000 0000'
+        }
+    }
+}
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 9\Pointers.X\Pointers.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\11_MEMORY MAPPING.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+
+<!-- Section 11: Interrupt -->       
+ 
+    <div class="content" id="sec11">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>Interrupt</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre11')">Copy code</button></span>
+<pre id="pre11">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned char val; //global variable
+void main()
+{
+    TRISB=0x01;         //bit0-input
+    TRISC=0x00;         //All bits output
+    PORTB=0x00;         //All bits low
+    PORTC=0x00;         //All bits low
+    OPTION_REG&=0x3F;   //bit-7 : Enable Pull-up resistor, bit-6 : Interrupt on falling edge
+    INTCON=0x90;        //bit-7 : Global Interrupt Enable, bit-4 : External Interrupt Enable
+    while(1);
+}
+void __interrupt() ISR()
+{
+    if(INTCON&0x02)     	//Check whether external interrupt occurred?
+    {
+        val=PORTB;      	//Storing portb value inside variable val
+        if(val==0x00)   	//Checking RB0 is low?
+        {
+            PORTC=~PORTC;   //Toggle portc
+        }
+    }
+    INTCON&=0xFD;       	//Clearing external interrupt flag 
+}
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 10\ext_interrupt.X\2023-04-14-1859-26.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\12_INTERRUPT.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+<!-- Section 12: Seven Segment Display -->       
+ 
+    <div class="content" id="sec12">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>Seven Segment Display</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre12')">Copy code</button></span>
+<pre id="pre12">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned char cathode[]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};//hexa values for cathode [0-9]
+unsigned char anode[]={0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90};  //hexa values for anode [0-9]
+unsigned char val;  //global variable
+int i=0;            //global variable
+void main()
+{
+    TRISD = 0x00;   //portD as a output 
+    TRISC = 0x00;   //portC as a output   
+    TRISB = 0x07;   //PortB Bit0,1,2-input
+    PORTD = 0x00;   //portD all bits low
+    PORTC = 0x00;   //portC all bits low
+    PORTB = 0x00;   //portB all bits low
+    OPTION_REG&=0x7F;//pull-up resistor
+    while(1)
+    {
+        val=PORTB;          //Store portB value inside variable val
+        PORTD=cathode[i];   //Store array value inside portD
+        PORTC=anode[i];     //Store array value inside portC
+        if(val==0x06)       //1st switch ON : Reset to zero
+        {
+            i=0;
+            __delay_ms(500);//delay     
+        }
+        else if(i>9)        //if i>9, set i=9
+            i=9;
+        else if(i<0)        //if i<0, set i=0
+            i=0;
+        else if(val==0x05)  //2nd switch ON : increment i
+        {  
+            i++;
+            __delay_ms(500);//delay           
+        }
+        else if(val==0x03)  //3rd switch ON : decrement i
+        {
+            i--;
+            __delay_ms(500);//delay           
+        }
+    }
+}
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 10\7segment.X\2023-04-15-0049-02.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\14_7SEGMENT.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+<!-- Section 13: Timer -->       
+ 
+    <div class="content" id="sec13">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>Timer</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre13')">Copy code</button></span>
+<pre id="pre13">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned int cnt=0;//global variable
+void main()
+{
+    TRISC=0x00;		//PORTC as output
+    PORTC=0x00;		//PORTC all bits low
+    INTCON|=0xC0;	//Enable Global Interrupt(bit7) & Peripheral Interrupt(bit6)
+    PIE1|=0x01;		//Enable Timer1 overflow interrupt(bit0)
+    T1CON|=0x11;	//prescalar1:2(bit5-4->01) and Enable Timer1(bit0)
+    while(1)
+    {
+
+    }
+}
+void __interrupt() ISR()
+{
+    if(PIR1&0x01)//Enters the loop if bit0 of PIR1 reg = 1
+    {
+        cnt++;//Increment cnt
+        if(cnt==23)//Enters the loop if cnt=23 [ 1sec = 23counts ]
+        {
+            PORTC=~PORTC;//Toggle PORTC
+            cnt=0;//reset cnt to 0
+        }
+    }
+    PIR1&=~0x01;//Make bit0 of PIR1 reg as 0
+}
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 11\TimerInterrupt.X\2023-05-06-2235-34.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\15_TIMER.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+
+
+<!-- Section 14: Timer Preloding -->       
+ 
+    <div class="content" id="sec14">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>Timer Preloding</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre14')">Copy code</button></span>
+<pre id="pre14">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 6000000
+unsigned int cnt=0;//global variable
+void main()
+{
+    TRISC=0x00;//PORTC as output
+    PORTC=0x00;//PORTC all bits low
+    INTCON|=0xC0;//Enable Global Interrupt(bit7) & Peripheral Interrupt(bit6)
+    PIE1|=0x01;//Enable Timer1 overflow interrupt(bit0)
+    T1CON|=0x01;//prescalar1:1(bit5-4->00) and Enable Timer1(bit0)
+    TMR1=5535;//Preloading
+    while(1);
+}
+void __interrupt() ISR()
+{
+    if(PIR1&0x01)//Enters the loop if bit0 of PIR1 reg = 1
+    {
+        cnt++;//Increment cnt
+        if(cnt==25)//Enters the loop if cnt=25 [ 1sec = 25counts ]
+        {
+            PORTC=~PORTC;//Toggle PORTC
+            cnt=0;//reset cnt to 0
+        }
+    }
+    PIR1&=~0x01;//Make bit0 of PIR1 reg as 0
+    TMR1=5535;//Preloading
+}
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 12\TimerPreloading.X\2023-05-07-2132-24.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\15_TIMER.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+
+
+<!-- Section 15: Keypad Interface -->       
+ 
+    <div class="content" id="sec15">
+<h2>
+  <button class="dropdown-button" onclick="toggleDropdown(this)"></button> 
+  
+</h2>
+      <h2>Keypad Interface</h2>
+<div class="dropdown-content">
+<span style="float: right;"><button onclick="copyPreContent('pre15')">Copy code</button></span>
+<pre id="pre15">
+
+// PIC16F877A Configuration Bit Settings
+// 'C' source line config statements
+__CONFIG(FOSC_EXTRC & WDTE_OFF & PWRTE_OFF & BOREN_OFF & LVP_OFF & CPD_OFF & WRT_OFF & CP_OFF);
+
+#include &lt;xc.h&gt;
+#define _XTAL_FREQ 600000
+#define R1 RB0
+#define R2 RB1
+#define R3 RB2
+#define R4 RB3
+#define C1 RB4
+#define C2 RB5
+#define C3 RB6
+#define C4 RB7
+unsigned char key(); //prototype
+unsigned char keypad[4][4]={{'7','8','9','/'},{'4','5','6','*'},{'1','2','3','-'},{' ','0','=','+'}};//array declared globally
+unsigned char rowloc,colloc,k; 			//global variables
+void initialization(); 				//prototype
+void command(unsigned char); 			//prototype
+void data(unsigned char); 			//prototype
+unsigned char A[14]={"PRESSED KEY : "}; 	//array declared globally
+void main()
+{       
+    while(1)
+    {
+        command(0X80);				//starting address '1000 0010' 
+        initialization();			//calling the initialization function without any argument
+        for(int i=0;i<14;i++)
+        {	
+            data(A[i]);				//printing the data using a for loop
+        }
+        k=key();				//calling key function, result stored in variable k
+        data(k);				//calling data function with value inside k as parameter
+    
+    }
+}
+void initialization()
+{
+    TRISB=0XF0;					//setting B0-B3 as output and B4-B7 as input '1111 0000'
+    TRISD=0X00;					//setting D port as output for RS and Enable '0000 0000'
+    TRISC=0X00;					//setting C port as output for sending data  '0000 0000'
+    OPTION_REG&=0X7F;           		//ENABLE PULL UP
+    command(0x30);				//0011 0000
+    __delay_ms(20);
+        command(0X30);				//0011 0000
+    __delay_ms(20);
+        command(0X30);				//0011 0000
+    __delay_ms(20);
+        command(0X38);				//setting n and f values (n=1,f=0) 0011 1000
+    __delay_ms(20);
+        command(0X06);				//right to left command '0000 0110'
+    __delay_ms(10);
+        command(0X0C);				//display on cursor off '0000 1100'
+    __delay_ms(10);
+}
+
+unsigned char key()
+{
+    PORTB=0X00;//portb all bits low
+    while(C1&&C2&&C3&&C4);			//C1,C2,C3,C4->Not equal to 0
+    while(!C1||!C2||!C3||!C4) {
+        R1=0;
+        R2=R3=R4=1;
+        if(!C1||!C2||!C3||!C4) {
+            rowloc=0;				//Set rowloc=0
+            break;
+        }
+        R2=0;R1=1;
+        if(!C1||!C2||!C3||!C4) {
+            rowloc=1;				//Set rowloc=1
+            break;
+        }
+        R3=0;R2=1;
+        if(!C1||!C2||!C3||!C4) {
+            rowloc=2;				//Set rowloc=2
+            break;
+        }
+        R4=0; R3=1;
+        if(!C1||!C2||!C3||!C4){
+            rowloc=3;				//Set rowloc=3
+            break;
+        }
+    }
+    if(C1==0&&C2!=0&&C3!=0&&C4!=0)		//enters if C1 alone = 0 
+            colloc=0;//set colloc=0
+    else if(C1!=0&&C2==0&&C3!=0&&C4!=0)		//enters if C2 alone = 0
+            colloc=1;//set colloc=1
+    else if(C1!=0&&C2!=0&&C3==0&&C4!=0)		//enters if C3 alone = 0
+            colloc=2;//set colloc=2
+    else if(C1!=0&&C2!=0&&C3!=0&&C4==0)		//enters if C4 alone = 0
+            colloc=3;//set colloc=3
+    while(C1==0||C2==0||C3==0||C4==0);		//runs while any 1 equal to 0
+    return (keypad[rowloc][colloc]);
+}
+
+void command(unsigned char a)
+{
+    PORTC=0X00;			//setting RS as 0 for command 0000 0000
+    PORTD=a;			//passing the data to port c
+    PORTC=0X40;			//setting the enable high 0100 0000
+    PORTC=0X00;			//setting the enable low 0000 0000
+    __delay_ms(10);		//delay
+}
+void data(unsigned char a)
+{
+    PORTC=0X02;			//setting RS as 1 for data 0000 0010
+    PORTD=a;			//passing the data to port c
+    PORTC=0X42;			//setting the enable high 0100 0010
+    PORTC=0X02;			//setting the enable low 0000 0010
+    __delay_ms(10);		//delay
+}
+
+</pre>
+
+
+<h2>Proteus Simulation</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\WEEK 11\keypad.X\2023-05-06-2238-38.mp4" type="video/mp4">  
+</video>
+
+<h2 align="left">Hardware</h2>
+<center>
+<video width="500" height=auto controls>
+  <source src="D:\PROTEUS\HARDWARE\17_KEYPAD.mp4"
+type="video/mp4">  
+</video>
+<h2 align="right"><button onclick="scrollToTop()">Page Up</button></h2>
+    
+</div>
+	</div>
+
+
+
+</div>
+  <div class="footer">
+    <p>&copy; 2023 Modern Web Page. All rights reserved.</p>
+  </div>
+
+</html>
+
+
+
+
+
